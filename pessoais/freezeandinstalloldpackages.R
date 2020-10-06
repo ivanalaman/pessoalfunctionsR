@@ -31,7 +31,7 @@ freeze_packages <- function(choosepathlibrary = NULL){
 
 installfreeze_packages <- function(){
      #Depois de congelado os pacotes, é hora de instalá-los na nova versão do R. Para isto, escolha o arquivo requirements.txt criado anteriormente com a função freeze_packages.
-     fille <- file.choose()
+     fille <- tcltk::tk_choose.files(caption='Select your requirements file!')
      readfiles <- read.table(fille)
      apply(readfiles,1,install.packages)
 }
