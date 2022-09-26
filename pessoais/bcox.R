@@ -9,14 +9,14 @@ bcox.default <- function(x,...){
 }
 
 
-bcox.aov <- function(x, data, lambda = seq(-2,2,1/10),plotit=TRUE,round=3,...){ #um objeto da classe lm, aov ou formula
+bcox.lm <- function(x, data, lambda = seq(-2,2,1/10),plotit=TRUE,round=3,...){ #um objeto da classe lm, aov ou formula
 	aux <- MASS::boxcox(object = x,data = data, lambda = lambda,plotit=plotit,...)
 	aux2 <- do.call('cbind',aux)
 	aux3 <- which(aux2 == max(aux2[,2]), arr.ind=TRUE)
 	aux4 <- aux2[aux3[1,1],]
 	lambda <- aux4[1]
 
-	oldvar <- x$model$res 
+	oldvar <- data[[as.character(attr(terms(mod),'variables')[[2]])]]
 
 	if(lambda == 0){
 		newvar <- log(oldvar)

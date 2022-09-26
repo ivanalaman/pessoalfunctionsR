@@ -1,9 +1,9 @@
-fdt_cross <- function(x,y,start,end,k,h){
+fdt_cross <- function(x,y,start,end,k,h,...){
  # x: the numeric variable
  # y: the categorical variable
  require(fdth)
  if(is.numeric(x)){
-  auxx1 <- fdt(x,k=k,start=start,end=end,h=h)$breaks
+  auxx1 <- fdt(x,k=k,start=start,end=end,h=h,...)$breaks
   auxx2 <- cut(x,
                br=seq(auxx1[1],
                       auxx1[2],

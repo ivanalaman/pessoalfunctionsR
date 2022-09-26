@@ -1,4 +1,4 @@
-conf.mean <- function(x, sigma=NULL, n=NULL, conf.level=0.95,...){
+conf.mean <- function(x, sigma=NULL, S=NULL, n=NULL, conf.level=0.95,...){
   
   format.perc <- function(probs, digits){
    ## Not yet exported, maybe useful in other contexts:
@@ -11,13 +11,19 @@ conf.mean <- function(x, sigma=NULL, n=NULL, conf.level=0.95,...){
   
     xbarra = x
 
-    if(is.null(sigma)) stop('Não há como estimar sigma!!')
+    if(is.null(sigma) & is.null(S)) stop('Não há como calcular o erro padrão da média!!')
     if(is.null(n)) stop('O tamanho da amostra deve ser fornecido!!')
 
     aux_a = (1-conf.level)/2
     a = c(aux_a, 1 - aux_a)
     pct = format.perc(a,3)
+
+    if(is.null(S)){
     fac = qnorm(a)
+    }else{
+    fac = qt(a,n-1)
+    sigma = S
+    }
     erro_padrao = sigma/sqrt(n)  
     res <- list(est_pontual = xbarra,
                 erro_pad = erro_padrao,
